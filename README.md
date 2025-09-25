@@ -1,50 +1,51 @@
-# Blurbable 🚀
+# Blurbable
 
-Blurbable is a career-focused social network for quick updates, funny work stories, and real human career moments.  
-Think LinkedIn without the corporate fluff.
-
----
-
-## ✨ Features
-- Blurbs: share career updates or funny workplace stories
-- Career timeline instead of rigid resumes
-- Fun reactions: 👏 Promoted, 😅 Relatable, ☕ Need Coffee
-- Groups by vibe, not just industry
-- Job blurbs written by humans, not bots
-- Badges for career milestones
+**Blurbable** is a career-focused social network for sharing quick updates, funny work stories, and real career moments. Think LinkedIn without the corporate polish — authentic, text-first, and community-driven.
 
 ---
 
-## 🛠️ Tech Stack
-- **Frontend (Web):** React  
-- **Mobile:** React Native  
-- **Backend:** Node.js + Express  
-- **Database:** PostgreSQL + Redis  
-- **Auth:** OAuth + JWT  
+## Vision
+
+Blurbable is built for professionals who want:
+
+* Real human career stories without AI or copy-paste spam
+* Short, thoughtful posts (150–250 words)
+* A space that balances casual networking with career support
 
 ---
 
-## 🚧 Roadmap
-- [ ] User authentication & profiles  
-- [ ] Posting blurbs + reactions  
-- [ ] Career timeline integration  
-- [ ] Groups & community features  
-- [ ] Mobile app release (React Native)  
-- [ ] Company pages + job blurbs  
+## Core Principles
+
+* **Text-first**: No links, no external media. The only image allowed is a profile picture.
+* **Authenticity**: All content is human-written, no automation or AI-generated posts.
+* **Positive culture**: Reactions are lighthearted and affirming, not negative.
+* **Community-led**: Moderation is driven by the members, not algorithms.
 
 ---
 
-## 🤝 Contributing
-Contributions are welcome! Here’s how you can help:  
-1. Fork the repo  
-2. Create a new branch (`git checkout -b feature-name`)  
-3. Commit your changes (`git commit -m "Add feature"`)  
-4. Push to your branch (`git push origin feature-name`)  
-5. Open a Pull Request  
+## MVP Features
 
-Please check existing issues or open a new one before starting major work.  
+1. **Blurb Posts** – Share short posts between 150–250 words.
+2. **Positive Reactions** – Simple, light responses to support the community.
+3. **Threaded Comments** – Expandable discussions under each blurb.
+4. **Casual Profiles** – Highlight personality and role without corporate jargon.
+5. **Follow & Friend System** – Flexible networking through following or mutual connections.
+6. **Community Moderation** – User-driven vibe checks and reporting.
+7. **Casual Job Board** – Plain-text postings free of buzzwords.
 
 ---
 
-## 📜 License
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+## Roadmap
+
+* Group chats and interest-based channels
+* Mobile app with shared framework from web launch
+* Scaled moderation tools
+* Expanded profile customization
+
+---
+
+## Tech Goals
+
+* Web-based first, designed with portability to mobile in mind
+* Lightweight, modern framework for scalability
+* Clear separation of front-end and back-end to allow growth
