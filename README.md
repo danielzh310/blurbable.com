@@ -1,6 +1,6 @@
 # Blurbable
 
-**Blurbable** is a career-focused social network for sharing quick updates, funny work stories, and real career moments. Think LinkedIn without the corporate polish — authentic, text-first, and community-driven.
+**Blurbable** is a career-focused social network for sharing quick updates, funny work stories, and real career moments. Think LinkedIn without the corporate bullshit; authentic, text-first, and community-driven.
 
 ---
 
@@ -25,13 +25,13 @@ Blurbable is built for professionals who want:
 
 ## MVP Features
 
-1. **Blurb Posts** – Share short posts between 150–250 words.
-2. **Positive Reactions** – Simple, light responses to support the community.
-3. **Threaded Comments** – Expandable discussions under each blurb.
-4. **Casual Profiles** – Highlight personality and role without corporate jargon.
-5. **Follow & Friend System** – Flexible networking through following or mutual connections.
-6. **Community Moderation** – User-driven vibe checks and reporting.
-7. **Casual Job Board** – Plain-text postings free of buzzwords.
+1. **Blurb Posts:** Share short posts between 150–250 words.
+2. **Positive Reactions:** Simple, light responses to support the community.
+3. **Threaded Comments:** Expandable discussions under each blurb.
+4. **Casual Profiles:** Highlight personality and role without corporate jargon.
+5. **Follow & Friend System:** Flexible networking through following or mutual connections.
+6. **Community Moderation:** User-driven vibe checks and reporting.
+7. **Casual Job Board:** Plain-text postings free of buzzwords.
 
 ---
 
