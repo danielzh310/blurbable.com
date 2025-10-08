@@ -1,0 +1,6 @@
+/node_modules
+/.next
+.env.local
+/data/signups.json
+/prometheus/data
+/grafana/data

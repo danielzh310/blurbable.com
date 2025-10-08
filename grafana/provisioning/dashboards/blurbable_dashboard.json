@@ -1,0 +1,32 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Blurbable Overview",
+    "panels": [
+      {
+        "type": "timeseries",
+        "title": "Signups (Total)",
+        "targets": [
+          {
+            "expr": "blurbable_signups_total",
+            "legendFormat": "signups"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 6 }
+      },
+      {
+        "type": "timeseries",
+        "title": "HTTP Requests (total)",
+        "targets": [
+          {
+            "expr": "http_request_total",
+            "legendFormat": "requests"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 6, "w": 12, "h": 6 }
+      }
+    ],
+    "schemaVersion": 16,
+    "version": 0
+  }
+}
