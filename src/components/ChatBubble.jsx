@@ -1,29 +1,31 @@
 import React from "react";
 
+/**
+ * ChatBubble now only renders the bubble itself.
+ * Alignment is handled by the parent wrapper in index.js
+ */
 export default function ChatBubble({ message, isUser = false }) {
-  const userStyle = {
-    alignSelf: "flex-end",
-    background: "#e0e0e0",
-    color: "#111",
+  const base = {
     borderRadius: 20,
     padding: "10px 14px",
     maxWidth: "75%",
     wordBreak: "break-word",
+    fontSize: 15,
+    lineHeight: 1.35,
+    boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
   };
 
   const botStyle = {
-    alignSelf: "flex-start",
-    background: "#a3b18a", // requested green
+    ...base,
+    background: "#a3b18a",
     color: "#fff",
-    borderRadius: 20,
-    padding: "10px 14px",
-    maxWidth: "75%",
-    wordBreak: "break-word",
   };
 
-  return (
-    <div style={{ display: "flex", width: "100%" }}>
-      <div style={isUser ? userStyle : botStyle}>{message}</div>
-    </div>
-  );
+  const userStyle = {
+    ...base,
+    background: "#e7e7e7",
+    color: "#4a4a4a",
+  };
+
+  return <div style={isUser ? userStyle : botStyle}>{message}</div>;
 }

@@ -17,7 +17,6 @@ export default function Home() {
   const scrollRef = useRef();
 
   useEffect(() => {
-    // ensure page background and font
     document.documentElement.style.background = "#f5f5f5";
     document.body.style.background = "#f5f5f5";
   }, []);
@@ -36,7 +35,6 @@ export default function Home() {
     const value = (raw || "").trim();
     if (!value) return;
 
-    // add user message
     appendMessage({ from: "user", text: value });
 
     if (step === 0) {
@@ -53,7 +51,6 @@ export default function Home() {
     }
 
     if (step === 1) {
-      // submit email
       setForm((f) => ({ ...f, email: value }));
       setTyping(true);
       await new Promise((r) => setTimeout(r, 900));
@@ -90,12 +87,11 @@ export default function Home() {
         flexDirection: "column",
         alignItems: "center",
         paddingTop: 40,
-        paddingBottom: 80,
         fontFamily: "'Source Sans Pro', sans-serif",
         color: "#4a4a4a",
       }}
     >
-      {/* logo (bigger) */}
+      {/* LOGO */}
       <img
         src="/favicon.ico"
         alt="logo"
@@ -109,7 +105,7 @@ export default function Home() {
         }}
       />
 
-      {/* heading */}
+      {/* TITLE */}
       <h1
         style={{
           fontSize: 34,
@@ -121,32 +117,46 @@ export default function Home() {
         Hey there 👋 Want in?
       </h1>
 
-      {/* two-column layout: chat (left) and input column (right) */}
+      {/* CHAT AREA */}
       <div
         style={{
-          width: "95%",
-          maxWidth: 1100,
+          width: "100%",
+          maxWidth: 900,
+          flexGrow: 1,
           display: "flex",
-          gap: 40,
-          alignItems: "flex-start",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
         }}
       >
-        {/* left: chat area */}
         <div
           ref={scrollRef}
           style={{
-            flex: 2,
-            minHeight: 300,
-            maxHeight: 520,
+            width: "100%",
+            maxWidth: 800,
+            flexGrow: 1,
             overflowY: "auto",
+            padding: "0 24px 200px", // ensures space for input/footer
             display: "flex",
             flexDirection: "column",
             gap: 12,
-            padding: "20px 24px",
           }}
         >
           {messages.map((m, i) => (
-            <ChatBubble key={i} message={m.text} isUser={m.from === "user"} />
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: m.from === "user" ? "flex-end" : "flex-start",
+              }}
+            >
+              <ChatBubble
+                message={m.text}
+                isUser={m.from === "user"}
+                bubbleColor={m.from === "user" ? "#b0b0b0" : "#a3b18a"}
+              />
+            </div>
           ))}
 
           {typing && (
@@ -197,53 +207,52 @@ export default function Home() {
           )}
         </div>
 
-        {/* right: vertical input column (centered) */}
+        {/* FIXED INPUT + FOOTER SECTION */}
         <div
           style={{
-            flex: 1,
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            background: "#f5f5f5",
             display: "flex",
             flexDirection: "column",
-            alignItems: "stretch",
-            justifyContent: "center", // vertically center
-            minHeight: 200,
-            gap: 12,
-            padding: "8px 4px",
+            alignItems: "center",
+            padding: "10px 0 12px",
+            boxShadow: "0 -2px 4px rgba(0,0,0,0.05)",
           }}
         >
-          {/* optional micro-help bubble at top of input column */}
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <div
-              style={{
-                background: "#d0d0d0",
-                color: "#333",
-                padding: "8px 14px",
-                borderRadius: 18,
-                maxWidth: "80%",
-                fontSize: 14,
-              }}
-            >
-              How do I sign up?
-            </div>
+          {/* Input field first */}
+          <div
+            style={{
+              width: "80%",
+              maxWidth: 420,
+              marginBottom: 6,
+            }}
+          >
+            <ChatInput onSend={(v) => handleSend(v)} inputColor="#b0b0b0" height="32px" />
           </div>
 
-          {/* the ChatInput will fill the column width */}
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <div style={{ width: "100%", maxWidth: 360 }}>
-              <ChatInput onSend={(v) => handleSend(v)} />
-            </div>
+          {/* Join counter BELOW the input */}
+          <div
+            style={{
+              fontSize: 14,
+              color: "#4a4a4a",
+              marginTop: 6,
+              textAlign: "center",
+            }}
+          >
+            Join 1 others waiting for early access!
+          </div>
+
+          {/* Footer copyright under everything */}
+          <div style={{ marginTop: 4 }}>
+            <Footer />
           </div>
         </div>
       </div>
 
-      {/* counter and footer */}
-      <div style={{ marginTop: 28, width: "100%", textAlign: "center" }}>
-        <CounterDisplay />
-      </div>
-
-      <div style={{ width: "100%", maxWidth: 760, marginTop: 18 }}>
-        <Footer />
-      </div>
-
+      {/* Styling */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
 
