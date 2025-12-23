@@ -37,15 +37,19 @@ Blurbable is built for professionals who want:
 
 ## Roadmap
 
-* Group chats and interest-based channels
-* Mobile app with shared framework from web launch
-* Scaled moderation tools
-* Expanded profile customization
+- [ ] **Phase 1 - MVP Launch:** Core blurb posting, commenting, reactions, profiles, and follow system
+* Phase 2 - Community Moderation: Tools for reporting posts, managing spam, and keeping the vibe authentic as we grow
+* Phase 3 - Discovery: Search and topic tags to help people find conversations relevant to them
+* Phase 4 - Mobile: Native apps for iOS and Android
+* Phase 5 - Groups and Channels: Interest-based channels and group chats for smaller communities within Blurbable
 
 ---
 
 ## Tech Goals
 
-* Web-based first, designed with portability to mobile in mind
-* Lightweight, modern framework for scalability
-* Clear separation of front-end and back-end to allow growth
+* Build for the web first, with mobile apps that share the same foundation
+* Keep everything fast and simple: no heavy features that slow things down
+* Design the backend to handle growth without falling apart
+* Real-time updates so conversations feel live
+* Make it easy to moderate and manage community reports
+* Mobile apps should work seamlessly with the web version
