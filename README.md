@@ -4,7 +4,7 @@
 
 ---
 
-## Vision
+## Our Vision
 
 Blurbable is built for professionals who want:
 
