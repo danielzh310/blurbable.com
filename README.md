@@ -37,7 +37,7 @@ Blurbable is built for professionals who want:
 
 ## Roadmap
 
-- [ ] **Phase 1 - MVP Launch:** Core blurb posting, commenting, reactions, profiles, and follow system
+- [x] **Phase 1 - MVP Launch:** Core blurb posting, commenting, reactions, profiles, and follow system
 * Phase 2 - Community Moderation: Tools for reporting posts, managing spam, and keeping the vibe authentic as we grow
 * Phase 3 - Discovery: Search and topic tags to help people find conversations relevant to them
 * Phase 4 - Mobile: Native apps for iOS and Android
