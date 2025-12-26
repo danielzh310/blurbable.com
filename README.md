@@ -1,6 +1,6 @@
 # blurbable.com
 
-**Blurbable** is a career-focused social networking site for sharing quick updates, funny work stories, and real career moments. Think LinkedIn without the corporate bullshit; authentic, text-first, and community-driven.
+**Blurbable** is where personal notes become shared moments: a quiet, text-first space for real thoughts and real connections.
 
 ---
 
