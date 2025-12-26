@@ -1,55 +1,59 @@
 # blurbable.com
 
-**Blurbable** is where personal notes become shared moments: a quiet, text-first space for real thoughts and real connections.
+**Blurbable** is a text-first social space for sharing honest thoughts, everyday moments, and real human experiences. Think LinkedIn without the corporate fluff and without the noise.
 
 ---
 
 ## Our Vision
 
-Blurbable is built for professionals who want:
+Blurbable is built for people who want:
 
-* Real human career stories without AI or copy-paste spam
-* Short, thoughtful posts (150-250 words)
-* A space that balances casual networking with career support
+* A private-first place to write personal thoughts like a notes app
+* The option to share selectively with trusted circles
+* A calm alternative to performative social media
+* Real human connection without algorithms, AI, or monetization pressure
+
+Blurbable is designed to be small, intentional, and human.
 
 ---
 
 ## Core Principles
 
-* **Text-first**: No links, no external media. The only image allowed is a profile picture.
-* **Authenticity**: All content is human-written, no automation or AI-generated posts.
-* **Positive culture**: Reactions are lighthearted and affirming, not negative.
-* **Community-led**: Moderation is driven by the members, not algorithms.
+* **Text-first**: No photos, no links, no external media. Writing is the product.
+* **Human-only**: All content is written by real people. No AI, no automation.
+* **Low-toxicity by design**: Public spaces are reaction-only. Conversations happen within trusted circles.
+* **Privacy and trust**: Users control what is private, shared with circles, or public.
+* **No performance incentives**: No followers, no metrics chasing, no algorithms.
 
 ---
 
 ## MVP Features
 
-1. **Blurb Posts:** Share short posts between 150–250 words.
-2. **Positive Reactions:** Simple, light responses to support the community.
-3. **Threaded Comments:** Expandable discussions under each blurb.
-4. **Casual Profiles:** Highlight personality and role without corporate jargon.
-5. **Follow & Friend System:** Flexible networking through following or mutual connections.
-6. **Community Moderation:** User-driven vibe checks and reporting.
-7. **Casual Job Board:** Plain-text postings free of buzzwords.
+1. **Blurb Posts:** Short text entries written directly into the app.
+2. **Privacy Controls:** Blurfs can be private, circle-only, or public.
+3. **Reactions:** Lightweight reactions instead of public comment threads.
+4. **Circle Replies:** Only people in your circle can reply, privately or in optional threads.
+5. **Minimal Profiles:** Simple identity focused on the person, not status or branding.
+6. **Verification:** Real people only. Accounts are verified to reduce bots and abuse.
+7. **Channels:** Lightweight topic buckets to organize thoughts, not algorithmic feeds.
 
 ---
 
 ## Roadmap
 
-- [ ] **Phase 1 - MVP Launch:** Core blurb posting, commenting, reactions, profiles, and follow system
-- [ ] **Phase 2 - Community Moderation:** Tools for reporting posts, managing spam, and keeping the vibe authentic as we grow
-- [ ] **Phase 3 - Discovery:** Search and topic tags to help people find conversations relevant to them
-- [ ] **Phase 4 - Mobile:** Native apps for iOS and Android
-- [ ] **Phase 5 - Groups and Channels:** Interest-based channels and group chats for smaller communities within Blurbable
+* [ ] **Phase 1 - MVP Launch:** Blurb writing, privacy levels, reactions, circles, and basic profiles
+* [ ] **Phase 2 - Trust and Safety:** Verification flows, reporting, and moderation tools
+* [ ] **Phase 3 - Discovery:** Channel browsing and connection-based discovery
+* [ ] **Phase 4 - Mobile:** Native apps for iOS and Android
+* [ ] **Phase 5 - Refinement:** Offline-first writing, performance improvements, and UX polish
 
 ---
 
 ## Tech Goals
 
-* Build for the web first, with mobile apps that share the same foundation
-* Keep everything fast and simple: no heavy features that slow things down
-* Design the backend to handle growth without falling apart
-* Real-time updates so conversations feel live
-* Make it easy to moderate and manage community reports
-* Mobile apps should work seamlessly with the web version
+* Build web-first with a shared foundation for mobile
+* Keep the product simple and fast with minimal UI
+* Avoid heavy real-time features until they are necessary
+* Prioritize reliability, privacy, and data integrity
+* Make moderation and abuse prevention straightforward
+* Ensure mobile and web experiences feel consistent
