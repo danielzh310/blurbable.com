@@ -1,6 +1,6 @@
 # blurbable.com
 
-**Blurbable** is a text-first social space for sharing honest thoughts, everyday moments, and real human experiences. Think LinkedIn without the corporate fluff and without the noise.
+**Blurbable** is a text-first social space for sharing honest thoughts, everyday moments, and real human experiences. Think LinkedIn without the corporate fluff, Reddit without the noise, and Instagram without the toxicity.
 
 ---
 
