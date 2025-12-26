@@ -1,3 +1,14 @@
+/*
+  Blurbable © 2025 Daniel Zhu
+
+  This file is part of the Blurbable project.
+  All rights reserved.
+
+  This source code is proprietary and may not be copied,
+  modified, distributed, or used without explicit written
+  permission from the copyright holder.
+*/
+
 import { useState } from 'react'
 import { Header, Tab } from './components/Header'
 import { BlurbCarousel } from './components/BlurbCarousel'
