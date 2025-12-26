@@ -57,3 +57,13 @@ Blurbable is designed to be small, intentional, and human.
 * Prioritize reliability, privacy, and data integrity
 * Make moderation and abuse prevention straightforward
 * Ensure mobile and web experiences feel consistent
+
+## Licensing & Copyright
+
+© 2025 Daniel Zhu. All rights reserved.
+
+This repository and its contents are provided for **viewing and evaluation purposes only**.
+
+The source code, design, copy, and associated assets in this repository are **proprietary** and may **not** be copied, modified, distributed, or used in other projects without **explicit written permission** from the author.
+
+This project is **not open source** and does not grant any license for reuse, redistribution, or derivative works.
