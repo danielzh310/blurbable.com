@@ -12,31 +12,32 @@
 import { useState } from 'react'
 import { Header, Tab } from './components/Header'
 import { BlurbCarousel } from './components/BlurbCarousel'
+import { WaitlistForm } from './components/WaitlistForm'
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('home')
 
-  // Local-only waitlist no backend
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleJoinSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-
-    setTimeout(() => {
-      setSubmitted(false)
-      setName('')
-      setEmail('')
-    }, 2500)
-  }
+  // Newest-first list (reverse chronological: most recent at top)
+  const updates = [
+    {
+      date: 'July 2026',
+      title: 'Building in Public',
+      body:
+        "We're currently in development, creating a space that prioritizes authentic human connection over metrics and engagement.",
+    },
+    {
+      date: 'Coming Soon',
+      title: 'Early Access Launch',
+      body:
+        'Sign up for early access and be among the first to share your thoughts on Blurbable.',
+    },
+  ]
 
   return (
     <div className="min-h-screen text-black bg-[#f3f9f7] overflow-x-hidden">
-      {/* Header fades in nd is hidden entirely in join mode*/}
+      {/* Header fades in and is hidden entirely in join mode */}
       {tab !== 'join' && (
-        <div className="fade-up">
+        <div className="fade-up relative z-20">
           <Header active={tab} onChange={setTab} />
         </div>
       )}
@@ -44,14 +45,14 @@ export default function App() {
       <main
         className={
           tab === 'join'
-            ? 'min-h-screen flex items-center justify-center px-10 md:px-16'
-            : 'max-w-7xl mx-auto px-10 md:px-16 overflow-x-hidden'
+            ? 'min-h-screen flex items-start md:items-center justify-center px-2 py-6 md:px-16 md:py-12'
+            : 'max-w-7xl mx-auto px-5 md:px-16 overflow-x-hidden'
         }
       >
         <div className="w-full fade-up">
           {tab === 'home' && (
-            <div className="min-h-[calc(100vh-140px)] flex items-center">
-              <div className="w-full py-12 md:py-0">
+            <div className="md:min-h-[calc(100vh-140px)] flex items-center">
+              <div className="w-full py-10 md:py-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
                   {/* Hero */}
                   <div className="w-full min-w-0">
@@ -64,6 +65,13 @@ export default function App() {
                         A text-first space for sharing honest thoughts, everyday moments,
                         and real human experiences. No pressure to be perfect.
                       </p>
+                      <button
+                        type="button"
+                        onClick={() => setTab('join')}
+                        className="mt-6 min-h-12 w-full max-w-sm rounded-full bg-brand px-6 py-3 font-semibold text-white hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand md:hidden"
+                      >
+                        Join the beta
+                      </button>
                     </div>
                   </div>
 
@@ -96,26 +104,15 @@ export default function App() {
             <section className="max-w-2xl mx-auto py-16">
               <h2 className="text-xl font-semibold">Updates</h2>
 
-              {[
-                {
-                  date: 'December 2025',
-                  title: 'Building in Public',
-                  body:
-                    "We're currently in development, creating a space that prioritizes authentic human connection over metrics and engagement.",
-                },
-                {
-                  date: 'Coming Soon',
-                  title: 'Early Access Launch',
-                  body:
-                    'Sign up for early access and be among the first to share your thoughts on Blurbable.',
-                },
-              ].map((u, i, arr) => (
+              {updates.map((u, i) => (
                 <div key={u.title} className="mt-8">
                   <p className="text-sm text-gray-500">{u.date}</p>
                   <h3 className="mt-2 font-semibold text-black">{u.title}</h3>
                   <p className="mt-2 text-gray-600 leading-relaxed">{u.body}</p>
 
-                  {i !== arr.length - 1 && <hr className="mt-8 border-gray-200" />}
+                  {i !== updates.length - 1 && (
+                    <hr className="mt-8 border-gray-200" />
+                  )}
                 </div>
               ))}
             </section>
@@ -123,49 +120,18 @@ export default function App() {
 
           {tab === 'join' && (
             <section className="w-full flex items-center justify-center">
-              <div className="w-full max-w-sm text-center">
+              <div className="w-full max-w-2xl text-center">
                 {/* Clickable logo returns to home and restores header */}
                 <button
                   type="button"
                   onClick={() => setTab('home')}
-                  className="mx-auto block text-[#0a4b39] font-extrabold tracking-tight text-5xl md:text-6xl hover:opacity-90 transition"
+                  className="mx-auto block text-[#0a4b39] font-extrabold tracking-tight text-4xl md:text-6xl hover:opacity-90 transition"
                   aria-label="Back to home"
                 >
                   blurbable
                 </button>
 
-                <form onSubmit={handleJoinSubmit} className="mt-10 space-y-4">
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Name"
-                    autoComplete="name"
-                    className="w-full rounded-full border border-gray-300 bg-transparent px-6 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0a4b39]"
-                  />
-
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    autoComplete="email"
-                    required
-                    className="w-full rounded-full border border-gray-300 bg-transparent px-6 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0a4b39]"
-                  />
-
-                  <button
-                    type="submit"
-                    disabled={!email || submitted}
-                    className="w-full rounded-full bg-[#0a4b39] text-white py-3 text-sm font-semibold hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition"
-                  >
-                    {submitted ? 'You’re in' : 'Join'}
-                  </button>
-
-                  <p className="pt-2 text-xs text-gray-500">
-                    Early access. No spam. Leave anytime.
-                  </p>
-                </form>
+                <WaitlistForm />
               </div>
             </section>
           )}

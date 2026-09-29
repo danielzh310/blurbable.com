@@ -31,14 +31,22 @@ export function Header({
       setOpen(false)
     }
     document.addEventListener('mousedown', onDocClick)
-    return () => document.removeEventListener('mousedown', onDocClick)
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onDocClick)
+      document.removeEventListener('keydown', onKeyDown)
+    }
   }, [open])
 
   const tabs: Tab[] = ['home', 'about', 'updates', 'join']
 
   return (
-    <header className="pt-8">
-      <div className="max-w-7xl mx-auto px-10 md:px-16">
+    <header className="pt-5 md:pt-8">
+      <div className="max-w-7xl mx-auto px-5 md:px-16">
+        {/* Desktop */}
         <div className="hidden md:flex items-center justify-between relative">
           <button
             type="button"
@@ -69,11 +77,15 @@ export function Header({
           <div className="w-[96px]" />
         </div>
 
-        <div className="md:hidden relative flex items-center justify-between">
+        {/* Mobile */}
+        <div ref={menuRef} className="md:hidden relative flex items-center justify-between">
+          {/* Hamburger: keep above everything */}
           <button
             type="button"
-            aria-label="Open menu"
-            className="h-10 w-10 flex items-center justify-center rounded-md hover:bg-black/5"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            className="h-11 w-11 flex items-center justify-center rounded-md hover:bg-black/5 relative z-30"
             onClick={() => setOpen((v) => !v)}
           >
             <span className="block w-5">
@@ -83,21 +95,25 @@ export function Header({
             </span>
           </button>
 
+          {/* Center logo: keep BELOW the menu overlay so it can’t block clicks */}
           <button
             type="button"
-            onClick={() => onChange('home')}
-            className="absolute left-1/2 -translate-x-1/2 font-extrabold text-3xl tracking-tight text-brand hover:opacity-90 transition-opacity"
+            onClick={() => {
+              onChange('home')
+              setOpen(false)
+            }}
+            className="absolute left-1/2 -translate-x-1/2 font-extrabold text-3xl tracking-tight text-brand hover:opacity-90 transition-opacity z-10"
             aria-label="Go to home"
           >
             blurbable
           </button>
 
-          <div className="h-10 w-10" />
+          <div className="h-11 w-11" />
 
           {open && (
             <div
-              ref={menuRef}
-              className="absolute left-0 top-12 w-56 bg-white border border-black/10 rounded-lg shadow-sm overflow-hidden z-50"
+              id="mobile-navigation"
+              className="absolute left-0 top-12 w-56 bg-white/95 backdrop-blur border border-black/10 rounded-lg shadow-sm overflow-hidden z-50"
             >
               {tabs.map((t) => (
                 <button

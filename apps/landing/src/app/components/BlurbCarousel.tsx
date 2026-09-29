@@ -45,10 +45,19 @@ export function BlurbCarousel() {
   // Start at the first "real" slide (index 1)
   const [index, setIndex] = useState(1)
   const [paused, setPaused] = useState(false)
+  const [canAutoplay, setCanAutoplay] = useState(false)
+
+  useEffect(() => {
+    const query = window.matchMedia(
+      '(min-width: 768px) and (hover: hover) and (prefers-reduced-motion: no-preference)',
+    )
+    const update = () => setCanAutoplay(query.matches)
+    update()
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
 
   const AUTOPLAY_MS = 5200
-  const CARD_HEIGHT_PX = 120
-  const SIDE_PADDING_PX = 12
 
   const scrollTo = (i: number, behavior: ScrollBehavior) => {
     const el = scrollerRef.current
@@ -87,30 +96,9 @@ export function BlurbCarousel() {
     setIndex(i)
   }
 
-  // Track scroll (manual swipes)
-  useEffect(() => {
-    const el = scrollerRef.current
-    if (!el) return
-
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        normalizeIfOnClone()
-      })
-    }
-
-    el.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      el.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [n])
-
   // Autoplay (only advances one slide; no rewind)
   useEffect(() => {
-    if (paused) return
+    if (paused || !canAutoplay) return
 
     autoplayRef.current = window.setInterval(() => {
       const next = index + 1
@@ -122,7 +110,7 @@ export function BlurbCarousel() {
       if (autoplayRef.current) window.clearInterval(autoplayRef.current)
       autoplayRef.current = null
     }
-  }, [paused, index])
+  }, [paused, index, canAutoplay])
 
   // If we programmatically set index to a clone, normalize right after movement ends
   // This helps for autoplay cases where scroll events can lag.
@@ -160,20 +148,22 @@ export function BlurbCarousel() {
   if (slides.length === 0) return null
 
   return (
-    <aside className="w-full">
-      <div className="grid gap-6 w-full">
-        <p className="text-gray-500">A glimpse of Blurbable</p>
+    <aside className="w-full" aria-label="Sample blurbs" aria-roledescription="carousel">
+      <div className="grid gap-3 md:gap-6 w-full">
+        <p className="text-center md:text-left text-gray-500">A glimpse of Blurbable</p>
 
         {/* Stage */}
         <div
-          className="w-full overflow-hidden"
-          style={{ height: `${CARD_HEIGHT_PX}px` }}
+          className="w-full overflow-hidden md:h-[120px]"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
           <div
             ref={scrollerRef}
-            className="w-full h-full overflow-x-auto overflow-y-hidden"
+            id="blurb-slides"
+            className="bb-hide-scrollbar w-full md:h-full overflow-x-auto overflow-y-hidden"
+            tabIndex={0}
+            aria-label="Sample blurbs. Swipe or use the arrow keys to browse."
             style={{
               display: 'flex',
               scrollSnapType: 'x mandatory',
@@ -189,40 +179,52 @@ export function BlurbCarousel() {
             {slides.map((b, i) => (
               <div
                 key={`${b.user}-${b.time}-${i}`}
-                className="bb-hide-scrollbar"
+                className="md:h-full md:px-3"
+                aria-hidden={i === 0 || i === n + 1 ? true : undefined}
                 style={{
                   flex: '0 0 100%',
                   minWidth: 0,
-                  height: '100%',
                   scrollSnapAlign: 'start',
                   boxSizing: 'border-box',
-                  paddingLeft: `${SIDE_PADDING_PX}px`,
-                  paddingRight: `${SIDE_PADDING_PX}px`,
                 }}
               >
                 <div
-                  className="border border-gray-200 rounded-lg bg-white h-full w-full px-6 py-5"
+                  className="border border-gray-200 rounded-lg bg-white h-full w-full px-5 md:px-6 py-5"
                   style={{ boxSizing: 'border-box', overflow: 'hidden' }}
                 >
                   <div className="text-sm text-gray-500 mb-2">
                     @{b.user} · {b.time}
                   </div>
 
-                  <p
-                    className="leading-relaxed text-gray-800"
-                    style={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                    }}
-                  >
+                  <p className="leading-relaxed text-gray-800 md:line-clamp-2">
                     {b.text}
                   </p>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="flex justify-center md:hidden" aria-label="Choose a sample blurb">
+          {base.map((b, i) => {
+            const active = ((index - 1 + n) % n) === i
+            return (
+              <button
+                key={b.user}
+                type="button"
+                aria-label={`Show blurb ${i + 1} of ${n}`}
+                aria-current={active ? 'true' : undefined}
+                aria-controls="blurb-slides"
+                onClick={() => {
+                  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                  scrollTo(i + 1, reducedMotion ? 'auto' : 'smooth')
+                }}
+                className="flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+              >
+                <span className={`h-2 rounded-full ${active ? 'w-5 bg-brand' : 'w-2 bg-gray-400'}`} />
+              </button>
+            )
+          })}
         </div>
 
         <p className="w-full text-center text-gray-500">
