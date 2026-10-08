@@ -1,12 +1,12 @@
 /*
-  Blurbable © 2025 Daniel Zhu
+  Blurbable © 2025–2026 Daniel Zhu
 
   This file is part of the Blurbable project.
   All rights reserved.
 
-  This source code is proprietary and may not be copied,
-  modified, distributed, or used without explicit written
-  permission from the copyright holder.
+  Proprietary. Reuse requires written permission and credit to
+  Blurbable and Daniel Zhu, subject to the terms and exceptions
+  in the repository's LICENSE. Credit alone is not permission.
 */
 
 // Public hosted form URL; no private API credentials are needed on the site.

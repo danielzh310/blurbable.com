@@ -1,10 +1,38 @@
-Copyright © 2025 Daniel Zhu
+Blurbable — Proprietary Terms
+Copyright © 2025–2026 Daniel Zhu
 
 All rights reserved.
 
-This repository is made publicly accessible for transparency and evaluation
-purposes only.
+These terms apply to the original Blurbable source code, documentation,
+design, written content, and assets in this repository. This repository is
+made publicly accessible for viewing, evaluation, and demonstration purposes.
 
 No license is granted to use, copy, modify, merge, publish, distribute,
 sublicense, or sell any part of this software, documentation, or design
-without explicit written permission from the copyright holder.
+without explicit written permission from the copyright holder, except as
+permitted by applicable law or the applicable hosting platform's terms.
+
+Attribution for authorized reuse
+
+Unless the copyright holder expressly agrees otherwise in writing, any
+authorized copying, modification, publication, distribution, or reuse must:
+
+1. Retain the applicable copyright notices and these terms with the reused
+   materials.
+2. Clearly credit Blurbable and Daniel Zhu in a location appropriate to the
+   use, such as accompanying documentation or a visible credits section.
+3. Include https://blurbable.com as the source, with a clickable link where
+   the medium supports it.
+4. Identify any modifications without presenting them as the original work.
+
+Suggested credit:
+"Based on Blurbable — Copyright © 2025–2026 Daniel Zhu. https://blurbable.com"
+
+Giving credit alone does not grant permission to copy or reuse the materials.
+This is not an open-source license.
+
+Third-party materials and statutory rights
+
+Third-party software, fonts, and other materials remain subject to their own
+licenses and copyright notices. These terms do not replace those licenses
+or restrict uses permitted by applicable law, including fair use.

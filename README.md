@@ -60,10 +60,12 @@ Blurbable is designed to be small, intentional, and human.
 
 ## Licensing & Copyright
 
-© 2025 Daniel Zhu. All rights reserved.
+© 2025–2026 Daniel Zhu. All rights reserved.
 
 This repository and its contents are provided for **viewing and evaluation purposes only**.
 
-The source code, design, copy, and associated assets in this repository are **proprietary** and may **not** be copied, modified, distributed, or used in other projects without **explicit written permission** from the author.
+Original Blurbable source code, design, written content, and associated assets are **proprietary**. Copying, modification, distribution, or reuse requires **explicit written permission** from Daniel Zhu, except as permitted by applicable law or the applicable hosting platform's terms.
 
-This project is **not open source** and does not grant any license for reuse, redistribution, or derivative works.
+**Authorized reuse must credit Blurbable and Daniel Zhu**, retain the applicable notices, include a link to [blurbable.com](https://blurbable.com) where supported, and identify modifications, unless otherwise agreed in writing. **Credit alone is not permission to copy.**
+
+This project is **not open source**. Third-party materials retain their own licenses and notices. See [LICENSE](LICENSE) for the full terms and [NOTICE](NOTICE) for the summary.
