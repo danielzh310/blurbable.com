@@ -22,6 +22,7 @@ export function Header({
 }) {
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement | null>(null)
+  const toggleRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
@@ -30,13 +31,16 @@ export function Header({
       if (menuRef.current.contains(e.target as Node)) return
       setOpen(false)
     }
-    document.addEventListener('mousedown', onDocClick)
+    document.addEventListener('pointerdown', onDocClick)
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape' && open) {
+        setOpen(false)
+        toggleRef.current?.focus()
+      }
     }
     document.addEventListener('keydown', onKeyDown)
     return () => {
-      document.removeEventListener('mousedown', onDocClick)
+      document.removeEventListener('pointerdown', onDocClick)
       document.removeEventListener('keydown', onKeyDown)
     }
   }, [open])
@@ -44,30 +48,28 @@ export function Header({
   const tabs: Tab[] = ['home', 'about', 'updates', 'join']
 
   return (
-    <header className="pt-5 md:pt-8">
-      <div className="max-w-7xl mx-auto px-5 md:px-16">
+    <header className="site-header">
+      <div className="header-inner">
         {/* Desktop */}
         <div className="hidden md:flex items-center justify-between relative">
           <button
             type="button"
             onClick={() => onChange('home')}
-            className="font-extrabold text-3xl tracking-tight text-brand hover:opacity-90 transition-opacity"
+            className="brand-wordmark"
             aria-label="Go to home"
           >
             blurbable
           </button>
 
-          <nav className="absolute left-1/2 -translate-x-1/2 flex gap-8">
+          <nav className="desktop-nav" data-active={active} aria-label="Main navigation">
+            <span className="nav-indicator" aria-hidden="true" />
             {tabs.map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => onChange(t)}
-                className={
-                  active === t
-                    ? 'font-extrabold text-black'
-                    : 'font-semibold text-gray-600 hover:text-black'
-                }
+                className="nav-link"
+                aria-current={active === t ? 'page' : undefined}
               >
                 {t}
               </button>
@@ -79,30 +81,28 @@ export function Header({
 
         {/* Mobile */}
         <div ref={menuRef} className="md:hidden relative flex items-center justify-between">
-          {/* Hamburger: keep above everything */}
           <button
+            ref={toggleRef}
             type="button"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="mobile-navigation"
-            className="h-11 w-11 flex items-center justify-center rounded-md hover:bg-black/5 relative z-30"
+            className="menu-toggle"
             onClick={() => setOpen((v) => !v)}
           >
-            <span className="block w-5">
-              <span className="block h-[2px] bg-black mb-1" />
-              <span className="block h-[2px] bg-black mb-1" />
-              <span className="block h-[2px] bg-black" />
+            <span className="menu-icon" aria-hidden="true">
+              <span />
+              <span />
             </span>
           </button>
 
-          {/* Center logo: keep BELOW the menu overlay so it can’t block clicks */}
           <button
             type="button"
             onClick={() => {
               onChange('home')
               setOpen(false)
             }}
-            className="absolute left-1/2 -translate-x-1/2 font-extrabold text-3xl tracking-tight text-brand hover:opacity-90 transition-opacity z-10"
+            className="brand-wordmark mobile-wordmark"
             aria-label="Go to home"
           >
             blurbable
@@ -110,11 +110,14 @@ export function Header({
 
           <div className="h-11 w-11" />
 
-          {open && (
-            <div
-              id="mobile-navigation"
-              className="absolute left-0 top-12 w-56 bg-white/95 backdrop-blur border border-black/10 rounded-lg shadow-sm overflow-hidden z-50"
-            >
+          <nav
+            id="mobile-navigation"
+            className="mobile-menu"
+            data-open={open}
+            aria-label="Mobile navigation"
+            aria-hidden={!open}
+          >
+            <div className="mobile-menu-inner">
               {tabs.map((t) => (
                 <button
                   key={t}
@@ -123,17 +126,16 @@ export function Header({
                     onChange(t)
                     setOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-3 ${
-                    active === t
-                      ? 'font-extrabold text-black'
-                      : 'font-semibold text-gray-700'
-                  } hover:bg-black/5`}
+                  className="mobile-nav-link"
+                  tabIndex={open ? 0 : -1}
+                  aria-current={active === t ? 'page' : undefined}
                 >
                   {t}
+                  <span aria-hidden="true">↗</span>
                 </button>
               ))}
             </div>
-          )}
+          </nav>
         </div>
       </div>
     </header>

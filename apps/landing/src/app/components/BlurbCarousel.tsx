@@ -45,6 +45,8 @@ export function BlurbCarousel() {
   // Start at the first "real" slide (index 1)
   const [index, setIndex] = useState(1)
   const [paused, setPaused] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const [autoplayStopped, setAutoplayStopped] = useState(false)
   const [canAutoplay, setCanAutoplay] = useState(false)
 
   useEffect(() => {
@@ -98,7 +100,7 @@ export function BlurbCarousel() {
 
   // Autoplay (only advances one slide; no rewind)
   useEffect(() => {
-    if (paused || !canAutoplay) return
+    if (paused || focused || autoplayStopped || !canAutoplay) return
 
     autoplayRef.current = window.setInterval(() => {
       const next = index + 1
@@ -110,7 +112,7 @@ export function BlurbCarousel() {
       if (autoplayRef.current) window.clearInterval(autoplayRef.current)
       autoplayRef.current = null
     }
-  }, [paused, index, canAutoplay])
+  }, [paused, focused, autoplayStopped, index, canAutoplay])
 
   // If we programmatically set index to a clone, normalize right after movement ends
   // This helps for autoplay cases where scroll events can lag.
@@ -148,55 +150,45 @@ export function BlurbCarousel() {
   if (slides.length === 0) return null
 
   return (
-    <aside className="w-full" aria-label="Sample blurbs" aria-roledescription="carousel">
-      <div className="grid gap-3 md:gap-6 w-full">
-        <p className="text-center md:text-left text-gray-500">A glimpse of Blurbable</p>
+    <aside
+      className="blurb-preview"
+      aria-label="Sample blurbs"
+      aria-roledescription="carousel"
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false)
+      }}
+    >
+      <div className="w-full">
+        <p className="preview-caption">A glimpse of Blurbable</p>
 
         {/* Stage */}
         <div
-          className="w-full overflow-hidden md:h-[120px]"
+          className="blurb-stage"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
           <div
             ref={scrollerRef}
             id="blurb-slides"
-            className="bb-hide-scrollbar w-full md:h-full overflow-x-auto overflow-y-hidden"
+            className="bb-hide-scrollbar blurb-scroller flex snap-x snap-mandatory w-full overflow-x-auto overflow-y-hidden"
             tabIndex={0}
             aria-label="Sample blurbs. Swipe or use the arrow keys to browse."
-            style={{
-              display: 'flex',
-              scrollSnapType: 'x mandatory',
-              WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
           >
-            <style>{`
-              .bb-hide-scrollbar::-webkit-scrollbar { display: none; }
-            `}</style>
-
             {slides.map((b, i) => (
               <div
                 key={`${b.user}-${b.time}-${i}`}
-                className="md:h-full md:px-3"
+                className="blurb-slide flex-[0_0_100%] min-w-0 snap-start box-border"
                 aria-hidden={i === 0 || i === n + 1 ? true : undefined}
-                style={{
-                  flex: '0 0 100%',
-                  minWidth: 0,
-                  scrollSnapAlign: 'start',
-                  boxSizing: 'border-box',
-                }}
               >
                 <div
-                  className="border border-gray-200 rounded-lg bg-white h-full w-full px-5 md:px-6 py-5"
-                  style={{ boxSizing: 'border-box', overflow: 'hidden' }}
+                  className="blurb-card"
                 >
-                  <div className="text-sm text-gray-500 mb-2">
-                    @{b.user} · {b.time}
+                  <div className="blurb-meta">
+                    <span>@{b.user}</span><span>{b.time}</span>
                   </div>
 
-                  <p className="leading-relaxed text-gray-800 md:line-clamp-2">
+                  <p className="blurb-text">
                     {b.text}
                   </p>
                 </div>
@@ -205,7 +197,7 @@ export function BlurbCarousel() {
           </div>
         </div>
 
-        <div className="flex justify-center md:hidden" aria-label="Choose a sample blurb">
+        <div className="carousel-controls" aria-label="Choose a sample blurb">
           {base.map((b, i) => {
             const active = ((index - 1 + n) % n) === i
             return (
@@ -219,15 +211,27 @@ export function BlurbCarousel() {
                   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
                   scrollTo(i + 1, reducedMotion ? 'auto' : 'smooth')
                 }}
-                className="flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+                className="carousel-dot"
               >
-                <span className={`h-2 rounded-full ${active ? 'w-5 bg-brand' : 'w-2 bg-gray-400'}`} />
+                <span />
               </button>
             )
           })}
+          {canAutoplay && (
+            <button
+              type="button"
+              className="carousel-playback"
+              aria-label={autoplayStopped ? 'Resume automatic previews' : 'Pause automatic previews'}
+              onClick={() => setAutoplayStopped((value) => !value)}
+            >
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true">
+                {autoplayStopped ? <path d="M5 3 13 8 5 13Z" /> : <path d="M4 3h3v10H4zm5 0h3v10H9z" />}
+              </svg>
+            </button>
+          )}
         </div>
 
-        <p className="w-full text-center text-gray-500">
+        <p className="preview-footer">
           Join to see more and share your own
         </p>
       </div>

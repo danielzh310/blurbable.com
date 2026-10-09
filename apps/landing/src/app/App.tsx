@@ -9,13 +9,39 @@
   in the repository's LICENSE. Credit alone is not permission.
 */
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Header, Tab } from './components/Header'
 import { BlurbCarousel } from './components/BlurbCarousel'
 import { WaitlistForm } from './components/WaitlistForm'
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('home')
+  const [visibleTab, setVisibleTab] = useState<Tab>('home')
+  const [leaving, setLeaving] = useState(false)
+  const mainRef = useRef<HTMLElement>(null)
+  const previousTab = useRef(visibleTab)
+
+  useEffect(() => {
+    if (tab === visibleTab) {
+      setLeaving(false)
+      return
+    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setLeaving(!reducedMotion)
+    const timer = window.setTimeout(() => {
+      setVisibleTab(tab)
+      setLeaving(false)
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }, reducedMotion ? 0 : 140)
+    return () => window.clearTimeout(timer)
+  }, [tab, visibleTab])
+
+  useEffect(() => {
+    if (previousTab.current !== visibleTab) {
+      mainRef.current?.focus({ preventScroll: true })
+      previousTab.current = visibleTab
+    }
+  }, [visibleTab])
 
   // Newest-first list (reverse chronological: most recent at top)
   const updates = [
@@ -34,41 +60,40 @@ export default function App() {
   ]
 
   return (
-    <div className="min-h-screen text-black bg-[#f3f9f7] overflow-x-hidden">
-      {/* Header fades in and is hidden entirely in join mode */}
-      {tab !== 'join' && (
-        <div className="fade-up relative z-20">
+    <div className="site-shell">
+      {visibleTab !== 'join' && (
+        <div className="header-shell">
           <Header active={tab} onChange={setTab} />
         </div>
       )}
 
       <main
-        className={
-          tab === 'join'
-            ? 'min-h-screen flex items-start md:items-center justify-center px-2 py-6 md:px-16 md:py-12'
-            : 'max-w-7xl mx-auto px-5 md:px-16 overflow-x-hidden'
-        }
+        ref={mainRef}
+        tabIndex={-1}
+        aria-label={`${visibleTab.charAt(0).toUpperCase()}${visibleTab.slice(1)}`}
+        aria-busy={leaving}
+        className={visibleTab === 'join' ? 'main-content join-layout' : 'main-content page-layout'}
       >
-        <div className="w-full fade-up">
-          {tab === 'home' && (
-            <div className="md:min-h-[calc(100vh-140px)] flex items-center">
-              <div className="w-full py-10 md:py-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div key={visibleTab} className={`page-panel ${leaving ? 'page-leaving' : 'page-entering'}`}>
+          {visibleTab === 'home' && (
+            <div className="home-layout">
+              <div className="w-full">
+                <div className="hero-grid">
                   {/* Hero */}
                   <div className="w-full min-w-0">
-                    <div className="hero-copy mx-auto text-center md:text-left">
-                      <h1 className="text-3xl font-semibold tracking-tight">
-                        Your thoughts, unfiltered
+                    <div className="hero-copy">
+                      <h1 className="hero-title reveal-first">
+                        Your thoughts,{' '}<br />unfiltered
                       </h1>
 
-                      <p className="mt-6 text-gray-600 leading-relaxed">
+                      <p className="hero-description reveal-second">
                         A text-first space for sharing honest thoughts, everyday moments,
                         and real human experiences. No pressure to be perfect.
                       </p>
                       <button
                         type="button"
                         onClick={() => setTab('join')}
-                        className="mt-6 min-h-12 w-full max-w-sm rounded-full bg-brand px-6 py-3 font-semibold text-white hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand md:hidden"
+                        className="primary-button hero-cta reveal-third"
                       >
                         Join the beta
                       </button>
@@ -76,8 +101,8 @@ export default function App() {
                   </div>
 
                   {/* Carousel */}
-                  <div className="w-full min-w-0 flex justify-center md:justify-end">
-                    <div className="w-full md:max-w-xl md:h-[210px]">
+                  <div className="w-full min-w-0 reveal-third">
+                    <div className="w-full">
                       <BlurbCarousel />
                     </div>
                   </div>
@@ -86,9 +111,9 @@ export default function App() {
             </div>
           )}
 
-          {tab === 'about' && (
-            <section className="max-w-2xl mx-auto py-16 space-y-4 text-gray-600">
-              <h2 className="text-xl font-semibold text-black">About</h2>
+          {visibleTab === 'about' && (
+            <section className="text-page about-page">
+              <h1 className="page-title">About</h1>
               <p>
                 Blurbable is a text-first social space focused on taste, identity,
                 and low-effort expression.
@@ -100,32 +125,32 @@ export default function App() {
             </section>
           )}
 
-          {tab === 'updates' && (
-            <section className="max-w-2xl mx-auto py-16">
-              <h2 className="text-xl font-semibold">Updates</h2>
+          {visibleTab === 'updates' && (
+            <section className="text-page">
+              <h1 className="page-title">Updates</h1>
 
               {updates.map((u, i) => (
-                <div key={u.title} className="mt-8">
+                <article key={u.title} className="update-entry">
                   <p className="text-sm text-gray-500">{u.date}</p>
-                  <h3 className="mt-2 font-semibold text-black">{u.title}</h3>
+                  <h2 className="mt-2 text-xl font-semibold text-black">{u.title}</h2>
                   <p className="mt-2 text-gray-600 leading-relaxed">{u.body}</p>
 
                   {i !== updates.length - 1 && (
                     <hr className="mt-8 border-gray-200" />
                   )}
-                </div>
+                </article>
               ))}
             </section>
           )}
 
-          {tab === 'join' && (
+          {visibleTab === 'join' && (
             <section className="w-full flex items-center justify-center">
               <div className="w-full max-w-2xl text-center">
                 {/* Clickable logo returns to home and restores header */}
                 <button
                   type="button"
                   onClick={() => setTab('home')}
-                  className="mx-auto block text-[#0a4b39] font-extrabold tracking-tight text-4xl md:text-6xl hover:opacity-90 transition"
+                  className="brand-wordmark join-wordmark"
                   aria-label="Back to home"
                 >
                   blurbable
